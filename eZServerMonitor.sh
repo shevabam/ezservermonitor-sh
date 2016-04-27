@@ -213,8 +213,15 @@ function cpu()
 # Function : memory
 function memory()
 {
-    MEM_TOTAL=`/usr/bin/free -tmo | grep -i Mem: | awk '{print $2}'`
-    MEM_FREE=`/usr/bin/free -tmo | grep -i Mem: | awk '{print $4+$6+$7}'`
+    MEM_TOTAL=`grep MemTotal /proc/meminfo | awk '{print $2}'`
+    MEM_TOTAL=$(( $MEM_TOTAL / 1024 ))
+
+    MEM_FREE=`grep MemFree /proc/meminfo | awk '{print $2}'`
+    MEM_BUFFERS=`grep Buffers /proc/meminfo | awk '{print $2}'`
+    MEM_CACHED=`grep Cached /proc/meminfo | awk '{print $2}' | head -1`
+
+    MEM_FREE=$(( $MEM_FREE + $MEM_BUFFERS + $MEM_CACHED ))
+    MEM_FREE=$(( $MEM_FREE / 1024 ))
  
     echo
     makeTitle "Memory"
