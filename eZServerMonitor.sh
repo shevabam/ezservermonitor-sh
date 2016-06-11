@@ -40,6 +40,9 @@ SERVICES_HOST[22]="localhost"
  
 SERVICES_NAME[80]="Web Server"
 SERVICES_HOST[80]="localhost"
+
+SERVICES_NAME[443]="Web Server - TLS"
+SERVICES_HOST[443]="localhost"
  
 SERVICES_NAME[3306]="Database"
 SERVICES_HOST[3306]="localhost"
