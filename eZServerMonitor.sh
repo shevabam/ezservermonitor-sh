@@ -179,7 +179,7 @@ function load_average()
     echo -e "${GREEN}  Since 1 minute     $LOAD_1_COLOR $LOAD_1_PERCENT% ($LOAD_1)"
     echo -e "${GREEN}  Since 5 minutes    $LOAD_2_COLOR $LOAD_2_PERCENT% ($LOAD_2)"
     echo -e "${GREEN}  Since 15 minutes   $LOAD_3_COLOR $LOAD_3_PERCENT% ($LOAD_3)"
-    echo -e "${GREEN}  Processus\t      ${WHITE}$PROCESS_NB process, including $PROCESS_RUN running"
+    echo -e "${GREEN}  Processes\t      ${WHITE}$PROCESS_NB process, including $PROCESS_RUN running"
 }
  
 # Function : CPU
