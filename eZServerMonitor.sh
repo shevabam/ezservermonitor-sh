@@ -362,7 +362,7 @@ function system_temperatures()
 function showAll()
 {
     system
-    load_average
+    load_averagel
     cpu
     memory
     network
