@@ -23,7 +23,7 @@
 DISK_SHOW_TMPFS=false
  
 # Service who returns WAN IP
-GET_WAN_IP="http://www.ezservermonitor.com/myip"
+GET_WAN_IP="https://www.ezservermonitor.com/myip"
  
 # Hosts to ping
 PING_HOSTS=("google.com" "facebook.com" "yahoo.com")
