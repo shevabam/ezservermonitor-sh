@@ -9,8 +9,8 @@
 #     @name eZ Server Monitor `sh                      #
 #     @author ShevAbam                                 #
 #     @website ezservermonitor.com                     #
-#     @created 18 Sept 2015                            #
-#     @version 2.2                                     #
+#     @created 30 nov. 2017                            #
+#     @version 2.3                                     #
 #                                                      #
 # **************************************************** #
  
@@ -46,6 +46,12 @@ SERVICES_HOST[3306]="localhost"
  
 # Temperatures blocks (true for enable)
 TEMP_ENABLED=false
+
+# Text color : RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE
+THEME_TEXT=GREEN
+
+# Title color : WHITE_ON_GREY, WHITE_ON_RED, WHITE_ON_GREEN, WHITE_ON_BLUE, WHITE_ON_MAGENTA, WHITE_ON_CYAN, BLACK_ON_YELLOW
+THEME_TITLE=WHITE_ON_GREY
  
  
 # ********************************************************** #
@@ -54,22 +60,31 @@ TEMP_ENABLED=false
  
 # Constants -- DON'T TOUCH !!
 ESM_NAME="eZ Server Monitor \`sh"
-ESM_VERSION="2.2"
+ESM_VERSION="2.3"
 ESM_AUTHOR="ShevAbam"
-ESM_CREATED="18 September 2015"
-ESM_URL="http://www.ezservermonitor.com"
+ESM_CREATED="30 nov. 2017"
+ESM_URL="https://www.ezservermonitor.com"
  
 # Colors
 NC="\e[0m"
 RED="\e[31;40m"
 GREEN="\e[32;40m"
 YELLOW="\e[33;40m"
+BLUE="\e[34;40m"
+MAGENTA="\e[35;40m"
+CYAN="\e[36;40m"
 WHITE="\e[37;40m"
  
 # Styles
 BOLD="\e[1m"
 RESET="\e[0m"
 WHITE_ON_GREY="\e[100;97m"
+WHITE_ON_RED="\e[41;37m"
+WHITE_ON_GREEN="\e[42;37m"
+WHITE_ON_BLUE="\e[104;37m"
+WHITE_ON_MAGENTA="\e[45;37m"
+WHITE_ON_CYAN="\e[46;37m"
+BLACK_ON_YELLOW="\e[103;30m"
  
  
 # *************************************************************** #
@@ -78,7 +93,7 @@ WHITE_ON_GREY="\e[100;97m"
  
 function makeTitle()
 {
-    echo -e "${BOLD}${WHITE_ON_GREY}  $1  ${RESET}"
+    echo -e "${BOLD}${!THEME_TITLE}  $1  ${RESET}"
 }
  
 # Function : system
@@ -112,13 +127,13 @@ function system()
  
     makeTitle "System"
  
-    echo -e "${GREEN}  Hostname\t   ${WHITE}$HOSTNAME"
-    echo -e "${GREEN}  OS\t\t   ${WHITE}$OS $DISTRO"
-    echo -e "${GREEN}  Kernel\t   ${WHITE}$KERNEL_INFO"
-    echo -e "${GREEN}  Uptime\t   ${WHITE}$UPTIME_DAYS day(s), $UPTIME_HOURS hours(s), $UPTIME_MINUTES minute(s)"
-    echo -e "${GREEN}  Last boot\t   ${WHITE}$LAST_BOOT_DATE $LAST_BOOT_TIME"
-    echo -e "${GREEN}  Current user(s)  ${WHITE}$USERS_NB connected"
-    echo -e "${GREEN}  Server datetime  ${WHITE}$CURRENT_DATE"
+    echo -e "${!THEME_TEXT}  Hostname\t   ${WHITE}$HOSTNAME"
+    echo -e "${!THEME_TEXT}  OS\t\t   ${WHITE}$OS $DISTRO"
+    echo -e "${!THEME_TEXT}  Kernel\t   ${WHITE}$KERNEL_INFO"
+    echo -e "${!THEME_TEXT}  Uptime\t   ${WHITE}$UPTIME_DAYS day(s), $UPTIME_HOURS hours(s), $UPTIME_MINUTES minute(s)"
+    echo -e "${!THEME_TEXT}  Last boot\t   ${WHITE}$LAST_BOOT_DATE $LAST_BOOT_TIME"
+    echo -e "${!THEME_TEXT}  Current user(s)  ${WHITE}$USERS_NB connected"
+    echo -e "${!THEME_TEXT}  Server datetime  ${WHITE}$CURRENT_DATE"
 }
  
 # Function : load average
@@ -176,10 +191,10 @@ function load_average()
  
     echo
     makeTitle "Load Average"
-    echo -e "${GREEN}  Since 1 minute     $LOAD_1_COLOR $LOAD_1_PERCENT% ($LOAD_1)"
-    echo -e "${GREEN}  Since 5 minutes    $LOAD_2_COLOR $LOAD_2_PERCENT% ($LOAD_2)"
-    echo -e "${GREEN}  Since 15 minutes   $LOAD_3_COLOR $LOAD_3_PERCENT% ($LOAD_3)"
-    echo -e "${GREEN}  Processes\t      ${WHITE}$PROCESS_NB process, including $PROCESS_RUN running"
+    echo -e "${!THEME_TEXT}  Since 1 minute     $LOAD_1_COLOR $LOAD_1_PERCENT% ($LOAD_1)"
+    echo -e "${!THEME_TEXT}  Since 5 minutes    $LOAD_2_COLOR $LOAD_2_PERCENT% ($LOAD_2)"
+    echo -e "${!THEME_TEXT}  Since 15 minutes   $LOAD_3_COLOR $LOAD_3_PERCENT% ($LOAD_3)"
+    echo -e "${!THEME_TEXT}  Processes\t      ${WHITE}$PROCESS_NB process, including $PROCESS_RUN running"
 }
  
 # Function : CPU
@@ -202,12 +217,12 @@ function cpu()
     makeTitle "CPU"
  
     if [ $CPU_NB -gt 1 ] ; then
-        echo -e "${GREEN}  Number\t ${WHITE}$CPU_NB"
+        echo -e "${!THEME_TEXT}  Number\t ${WHITE}$CPU_NB"
     fi
-    echo -e "${GREEN}  Model\t\t ${WHITE}$CPU_INFO"
-    echo -e "${GREEN}  Frequency\t ${WHITE}$CPU_FREQ MHz"
-    echo -e "${GREEN}  Cache L2\t ${WHITE}$CPU_CACHE"
-    echo -e "${GREEN}  Bogomips\t ${WHITE}$CPU_BOGOMIPS"
+    echo -e "${!THEME_TEXT}  Model\t\t ${WHITE}$CPU_INFO"
+    echo -e "${!THEME_TEXT}  Frequency\t ${WHITE}$CPU_FREQ MHz"
+    echo -e "${!THEME_TEXT}  Cache L2\t ${WHITE}$CPU_CACHE"
+    echo -e "${!THEME_TEXT}  Bogomips\t ${WHITE}$CPU_BOGOMIPS"
 }
  
 # Function : memory
@@ -225,7 +240,7 @@ function memory()
  
     echo
     makeTitle "Memory"
-    echo -e "${GREEN}  RAM\t\t${WHITE}$MEM_FREE Mb free of $MEM_TOTAL Mb"
+    echo -e "${!THEME_TEXT}  RAM\t\t${WHITE}$MEM_FREE Mb free of $MEM_TOTAL Mb"
 }
  
 # Function : network
@@ -245,10 +260,10 @@ function network()
     for INTERFACE in $INTERFACES
     do
         IP_LAN=`/sbin/ip -f inet -o addr show ${INTERFACE} | cut -d\  -f 7 | cut -d/ -f 1`
-        echo -e "${GREEN}  IP LAN (${INTERFACE})\t ${WHITE}$IP_LAN"
+        echo -e "${!THEME_TEXT}  IP LAN (${INTERFACE})\t ${WHITE}$IP_LAN"
     done
  
-    echo -e "${GREEN}  IP WAN\t ${WHITE}$IP_WAN"
+    echo -e "${!THEME_TEXT}  IP WAN\t ${WHITE}$IP_WAN"
 }
  
 # Function : ping
@@ -259,9 +274,9 @@ function ping()
  
     for HOST in ${PING_HOSTS[@]}
     do
-        PING=`/bin/ping -qc 1 $HOST | awk -F/ '/^rtt/ { print $5 }'`
+        PING=`/bin/ping -qc 1 $HOST | awk -F/ '/^(rtt|round-trip)/ { print $5 }'`
  
-        echo -e "${GREEN}  ${HOST}\t ${WHITE}$PING ms"
+        echo -e "${!THEME_TEXT}  ${HOST}\t ${WHITE}$PING ms"
     done
 }
  
@@ -280,7 +295,7 @@ function disk_space()
  
     echo
     makeTitle "Disk space (top 5)"
-    echo -e "${GREEN}$HDD_TOP"
+    echo -e "${!THEME_TEXT}$HDD_TOP"
     echo -e "${WHITE}$HDD_DATA"
 }
  
@@ -303,7 +318,7 @@ function services()
             CHECK_LABEL=${RED}OFFLINE
         fi
  
-        echo -e "${GREEN}  $NAME ($PORT) : ${CHECK_LABEL}"
+        echo -e "${!THEME_TEXT}  $NAME ($PORT) : ${CHECK_LABEL}"
     done
 }
  
@@ -323,7 +338,7 @@ function hdd_temperatures()
             do
                 TEMP_DISK=`hddtemp -n /dev/$DISK`"°C"
                
-                echo -e "  ${GREEN}/dev/$DISK\t${WHITE}$TEMP_DISK"
+                echo -e "  ${!THEME_TEXT}/dev/$DISK\t${WHITE}$TEMP_DISK"
             done
         else
             echo -e "${WHITE}\nPlease, install hddtemp${WHITE}"
@@ -343,14 +358,14 @@ function system_temperatures()
             TEMP_CPU=`/usr/bin/sensors | grep -E "^(CPU Temp|Core 0)" | cut -d '+' -f2 | cut -d '.' -f1`"°C"
             TEMP_MB=`/usr/bin/sensors | grep -E "^(Sys Temp|Board Temp)" | cut -d '+' -f2 | cut -d '(' -f1`
         
-            echo -e "  ${GREEN}CPU          ${WHITE}$TEMP_CPU"
-            echo -e "  ${GREEN}Motherboard  ${WHITE}$TEMP_MB"
+            echo -e "  ${!THEME_TEXT}CPU          ${WHITE}$TEMP_CPU"
+            echo -e "  ${!THEME_TEXT}Motherboard  ${WHITE}$TEMP_MB"
         # Raspberry Pi
         elif [ -f "/sys/class/thermal/thermal_zone0/temp" ] ; then
             TEMP_CPU=`cat /sys/class/thermal/thermal_zone0/temp`
             TEMP_CPU=$(( $TEMP_CPU / 1000 ))
            
-            echo -e "  ${GREEN}CPU          ${WHITE}$TEMP_CPU°C"
+            echo -e "  ${!THEME_TEXT}CPU          ${WHITE}$TEMP_CPU°C"
 
         else
             echo -e "${WHITE}\nPlease, install lm-sensors${WHITE}"

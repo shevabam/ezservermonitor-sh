@@ -1,10 +1,10 @@
-[eZ Server Monitor](http://www.ezservermonitor.com) (eSM) is a script for monitoring Linux servers. It is available in [Bash](http://www.ezservermonitor.com/esm-sh/features) version and [Web](http://www.ezservermonitor.com/esm-web/features) application.
+[eZ Server Monitor](https://www.ezservermonitor.com) (eSM) is a script for monitoring Linux servers. It is available in [Bash](https://www.ezservermonitor.com/esm-sh/features) version and [Web](https://www.ezservermonitor.com/esm-web/features) application.
 
 # eZ Server Monitor `sh
 
-In its [Bash](http://www.ezservermonitor.com/esm-sh/features) version eSM is a simple script that displays on a terminal information such as:
+In its [Bash](https://www.ezservermonitor.com/esm-sh/features) version eSM is a simple script that displays on a terminal information such as:
 
-![](http://www.ezservermonitor.com/uploads/esm_sh/esm-sh_dashboard-complete.png)
+![](https://www.ezservermonitor.com/uploads/esm_sh/esm-sh_dashboard-complete.png)
 
 - **System** : hostname, OS, kernel version, uptime, last boot date, number of current user(s), server datetime
 - **Load average** : percentages showing the CPU load (1 minute, 5 minutes et 15 minutes)
@@ -16,7 +16,11 @@ In its [Bash](http://www.ezservermonitor.com/esm-sh/features) version eSM is a s
 - **Services** : displays the status (up or down) services defined in the configuration section of the script
 - **Disks and system temperatures** : displays the disks, CPU and motherboard temperatures (optional)
 
+Several themes are available !
 
-You can download the last version [here](http://www.ezservermonitor.com/esm-sh/downloads). The [documentation](http://www.ezservermonitor.com/esm-sh/documentation) describes the script as a whole and also the list of options available.
+![](https://www.ezservermonitor.com/uploads/esm_sh/esm-sh_themes.png)
 
-View more information on the [official website](http://www.ezservermonitor.com/esm-sh/features).
+
+You can download the last version [here](https://www.ezservermonitor.com/esm-sh/downloads). The [documentation](https://www.ezservermonitor.com/esm-sh/documentation) describes the script as a whole and also the list of options available.
+
+**View more information on the [official website](https://www.ezservermonitor.com/esm-sh/features).**
