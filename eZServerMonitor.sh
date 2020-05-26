@@ -51,7 +51,7 @@ TEMP_ENABLED=false
 THEME_TEXT=GREEN
 
 # Title color : WHITE_ON_GREY, WHITE_ON_RED, WHITE_ON_GREEN, WHITE_ON_BLUE, WHITE_ON_MAGENTA, WHITE_ON_CYAN, BLACK_ON_YELLOW
-THEME_TITLE=WHITE_ON_GREY
+THEME_TITLE=WHITE_ON_GREEN
  
  
 # ********************************************************** #
@@ -101,13 +101,7 @@ function system()
 {
     OS=`uname -s`
   
-    if [ -e "/usr/bin/lsb_release" ] ; then
-        DISTRO=`/usr/bin/lsb_release -ds`
-    elif [ -e "/etc/system-release" ] ; then
-        DISTRO=`cat /etc/system-release`
-    else
-        DISTRO=`find /etc/*-release -type f -exec cat {} \; | grep NAME | tail -n 1 | cut -d= -f2 | tr -d '"'`;
-    fi
+    [[ -e "/usr/bin/lsb_release" ]] && DISTRO=`/usr/bin/lsb_release -ds` || [[ -e "/etc/system-release" ]] && DISTRO=`cat /etc/system-release` || DISTRO=`find /etc/*-release -type f -exec cat {} \; | grep NAME | tail -n 1 | cut -d= -f2 | tr -d '"'`
   
     HOSTNAME=`hostname`
     KERNEL_INFO=`/bin/uname -r`
@@ -147,47 +141,24 @@ function load_average()
     LOAD_1=`cat /proc/loadavg | awk '{print $1}'`
     # LOAD_1_PERCENT=`echo $LOAD_1 | awk '{print 100 * $1}'`
     LOAD_1_PERCENT=`echo $(($(echo $LOAD_1 | awk '{print 100 * $1}') / $CPU_NB))`
-    if [ $LOAD_1_PERCENT -ge 100 ] ; then
-        LOAD_1_PERCENT=100;
-    fi
+    [[ $LOAD_1_PERCENT -ge 100 ]] && LOAD_1_PERCENT=100
  
-    if [ $LOAD_1_PERCENT -ge 75 ] ; then
-        LOAD_1_COLOR=${RED}
-    elif [ $LOAD_1_PERCENT -ge 50 ] ; then
-        LOAD_1_COLOR=${YELLOW}
-    else
-        LOAD_1_COLOR=${WHITE}
-    fi
+    [[ $LOAD_1_PERCENT -ge 75 ]] && LOAD_1_COLOR=${RED} || [ $LOAD_1_PERCENT -ge 50 ] && LOAD_1_COLOR=${YELLOW} || LOAD_1_COLOR=${WHITE}
+
  
     LOAD_2=`cat /proc/loadavg | awk '{print $2}'`
     # LOAD_2_PERCENT=`echo $LOAD_2 | awk '{print 100 * $1}'`
     LOAD_2_PERCENT=`echo $(($(echo $LOAD_2 | awk '{print 100 * $1}') / $CPU_NB))`
-    if [ $LOAD_2_PERCENT -ge 100 ] ; then
-        LOAD_2_PERCENT=100;
-    fi
+    [[ $LOAD_2_PERCENT -ge 100 ]] && LOAD_2_PERCENT=100
  
-    if [ $LOAD_2_PERCENT -ge 75 ] ; then
-        LOAD_2_COLOR=${RED}
-    elif [ $LOAD_2_PERCENT -ge 50 ] ; then
-        LOAD_2_COLOR=${YELLOW}
-    else
-        LOAD_2_COLOR=${WHITE}
-    fi
+    [[ $LOAD_2_PERCENT -ge 75 ]] && LOAD_2_COLOR=${RED} || [[ $LOAD_2_PERCENT -ge 50 ]] && LOAD_2_COLOR=${YELLOW} || LOAD_2_COLOR=${WHITE}
  
     LOAD_3=`cat /proc/loadavg | awk '{print $3}'`
     # LOAD_3_PERCENT=`echo $LOAD_3 | awk '{print 100 * $1}'`
     LOAD_3_PERCENT=`echo $(($(echo $LOAD_3 | awk '{print 100 * $1}') / $CPU_NB))`
-    if [ $LOAD_3_PERCENT -ge 100 ] ; then
-        LOAD_3_PERCENT=100;
-    fi
+    [[ $LOAD_3_PERCENT -ge 100 ]] && LOAD_3_PERCENT=100
  
-    if [ $LOAD_3_PERCENT -ge 75 ] ; then
-        LOAD_3_COLOR=${RED}
-    elif [ $LOAD_3_PERCENT -ge 50 ] ; then
-        LOAD_3_COLOR=${YELLOW}
-    else
-        LOAD_3_COLOR=${WHITE}
-    fi
+    [[ $LOAD_3_PERCENT -ge 75 ]] && LOAD_3_COLOR=${RED} || [[ $LOAD_3_PERCENT -ge 50 ]] && LOAD_3_COLOR=${YELLOW} && LOAD_3_COLOR=${WHITE}
  
     echo
     makeTitle "Load Average"
@@ -205,10 +176,7 @@ function cpu()
     
     CPU_FREQ=`cat /proc/cpuinfo | grep -i "^cpu MHz" | awk -F": " '{print $2}' | head -1`
 
-    if [ -z $CPU_FREQ ] ; then
-        CPU_FREQ=`cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq`
-        CPU_FREQ=$(( $CPU_FREQ / 1000 ))
-    fi
+    [[ -z $CPU_FREQ ]] && CPU_FREQ=`cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq` && CPU_FREQ=$(( $CPU_FREQ / 1000 ))
     
     CPU_CACHE=`cat /proc/cpuinfo | grep -i "^cache size" | awk -F": " '{print $2}' | head -1`
     CPU_BOGOMIPS=`cat /proc/cpuinfo | grep -i "^bogomips" | awk -F": " '{print $2}' | head -1`
@@ -216,9 +184,7 @@ function cpu()
     echo
     makeTitle "CPU"
  
-    if [ $CPU_NB -gt 1 ] ; then
-        echo -e "${!THEME_TEXT}  Number\t ${WHITE}$CPU_NB"
-    fi
+    [[ $CPU_NB -gt 1 ]] && echo -e "${!THEME_TEXT}  Number\t ${WHITE}$CPU_NB"
     echo -e "${!THEME_TEXT}  Model\t\t ${WHITE}$CPU_INFO"
     echo -e "${!THEME_TEXT}  Frequency\t ${WHITE}$CPU_FREQ MHz"
     echo -e "${!THEME_TEXT}  Cache L2\t ${WHITE}$CPU_CACHE"
@@ -246,18 +212,10 @@ function memory()
 # Function : network
 function network()
 {
-     if [ -e /sbin/ifconfig ]; then 
-    INTERFACES=`/sbin/ifconfig |awk -F '[/  |: ]' '{print $1}' |sed -e '/^$/d'`
-    else
-    INTERFACES=`/sbin/ip a | sed '/^[0-9]\:/!d' | cut -d ":" -f 2 | cut -d " " -f 2`
-    fi
-   
-    if [ -e "/usr/bin/curl" ] ; then
-        IP_WAN=`curl -s ${GET_WAN_IP}`
-    else
-        IP_WAN=`wget ${GET_WAN_IP} -O - -o /dev/null`
-    fi
+    [[ -e /sbin/ifconfig ]] && INTERFACES=`/sbin/ifconfig |awk -F '[/  |: ]' '{print $1}' |sed -e '/^$/d'` || INTERFACES=`/sbin/ip a | sed '/^[0-9]\:/!d' | cut -d ":" -f 2 | cut -d " " -f 2`
  
+    [[ -e "/usr/bin/curl" ]] && IP_WAN=`curl -s ${GET_WAN_IP}` || IP_WAN=`wget ${GET_WAN_IP} -O - -o /dev/null`
+
     echo
     makeTitle "Network"
  
@@ -291,11 +249,7 @@ function disk_space()
     #HDD_DATA=`df -hl | grep -v "^Filesystem" | grep -v "^Sys. de fich." | sort -k5r | head -5 | sed s/^/"  "/`
     # HDD_DATA=`df -hl | sed "1 d" | grep -v "^Filesystem" | grep -v "^Sys. de fich." | sort | head -5 | sed s/^/"  "/`
  
-    if [ ${DISK_SHOW_TMPFS} = true ] ; then
-        HDD_DATA=`df -hl | sed "1 d" | grep -iv "^Filesystem|Sys." | sort | head -5 | sed s/^/"  "/`
-    else
-        HDD_DATA=`df -hl | sed "1 d" | grep -iv "^Filesystem|Sys." | grep -vE "^tmpfs|udev" | sort | head -5 | sed s/^/"  "/`
-    fi
+    [[ ${DISK_SHOW_TMPFS} = true ]] && HDD_DATA=`df -hl | sed "1 d" | grep -iv "^Filesystem|Sys." | sort | head -5 | sed s/^/"  "/` || HDD_DATA=`df -hl | sed "1 d" | grep -iv "^Filesystem|Sys." | grep -vE "^tmpfs|udev" | sort | head -5 | sed s/^/"  "/`
  
     echo
     makeTitle "Disk space (top 5)"
@@ -316,12 +270,8 @@ function services()
  
         CHECK=`(exec 3<>/dev/tcp/$HOST/$PORT) &>/dev/null; echo $?`
  
-        if [ $CHECK = 0 ] ; then
-            CHECK_LABEL=${WHITE}ONLINE
-        else
-            CHECK_LABEL=${RED}OFFLINE
-        fi
- 
+        [[ $CHECK = 0 ]] && CHECK_LABEL=${WHITE}ONLINE || CHECK_LABEL=${RED}OFFLINE
+
         echo -e "${!THEME_TEXT}  $NAME ($PORT) : ${CHECK_LABEL}"
     done
 }
