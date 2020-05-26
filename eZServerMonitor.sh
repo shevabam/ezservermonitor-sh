@@ -249,7 +249,8 @@ function disk_space()
     #HDD_DATA=`df -hl | grep -v "^Filesystem" | grep -v "^Sys. de fich." | sort -k5r | head -5 | sed s/^/"  "/`
     # HDD_DATA=`df -hl | sed "1 d" | grep -v "^Filesystem" | grep -v "^Sys. de fich." | sort | head -5 | sed s/^/"  "/`
  
-    [[ ${DISK_SHOW_TMPFS} = true ]] && HDD_DATA=`df -hl | sed "1 d" | grep -iv "^Filesystem|Sys." | sort | head -5 | sed s/^/"  "/` || HDD_DATA=`df -hl | sed "1 d" | grep -iv "^Filesystem|Sys." | grep -vE "^tmpfs|udev" | sort | head -5 | sed s/^/"  "/`
+ # Added P for POSIX compatibility to tackle an issue raised.
+    [[ ${DISK_SHOW_TMPFS} = true ]] && HDD_DATA=`df -hlP | sed "1 d" | grep -iv "^Filesystem|Sys." | sort | head -5 | sed s/^/"  "/` || HDD_DATA=`df -hlP | sed "1 d" | grep -iv "^Filesystem|Sys." | grep -vE "^tmpfs|udev" | sort | head -5 | sed s/^/"  "/`
  
     echo
     makeTitle "Disk space (top 5)"
