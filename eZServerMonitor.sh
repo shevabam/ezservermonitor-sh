@@ -246,8 +246,12 @@ function memory()
 # Function : network
 function network()
 {
+     if [ -e /sbin/ifconfig ]; then 
     INTERFACES=`/sbin/ifconfig |awk -F '[/  |: ]' '{print $1}' |sed -e '/^$/d'`
- 
+    else
+    INTERFACES=`/sbin/ip a | sed '/^[0-9]\:/!d' | cut -d ":" -f 2 | cut -d " " -f 2`
+    fi
+   
     if [ -e "/usr/bin/curl" ] ; then
         IP_WAN=`curl -s ${GET_WAN_IP}`
     else
