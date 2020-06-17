@@ -32,8 +32,8 @@ PING_HOSTS=("google.com" "facebook.com" "yahoo.com")
 # syntax :
 #   SERVICES_NAME[port_number]="label"
 #   SERVICES_HOST[port_number]="localhost"
-SERVICES_NAME[21]="FTP Server"
-SERVICES_HOST[21]="localhost"
+#SERVICES_NAME[21]="FTP Server"
+#SERVICES_HOST[21]="localhost"
  
 SERVICES_NAME[22]="SSH"
 SERVICES_HOST[22]="localhost"
@@ -41,8 +41,8 @@ SERVICES_HOST[22]="localhost"
 SERVICES_NAME[80]="Web Server"
 SERVICES_HOST[80]="localhost"
  
-SERVICES_NAME[3306]="Database"
-SERVICES_HOST[3306]="localhost"
+#SERVICES_NAME[3306]="Database"
+#SERVICES_HOST[3306]="localhost"
  
 # Temperatures blocks (true for enable)
 TEMP_ENABLED=false
