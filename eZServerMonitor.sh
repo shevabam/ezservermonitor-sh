@@ -101,7 +101,7 @@ function system()
 {
     OS=`uname -s`
   
-    [[ -e "/usr/bin/lsb_release" ]] && DISTRO=`/usr/bin/lsb_release -ds` || [[ -e "/etc/system-release" ]] && DISTRO=`cat /etc/system-release` || DISTRO=`find /etc/*-release -type f -exec cat {} \; | grep NAME | tail -n 1 | cut -d= -f2 | tr -d '"'`
+    [[ -f "/usr/bin/lsb_release" ]] && DISTRO=`/usr/bin/lsb_release -ds` || DISTRO=`find /etc/*-release -type f -exec cat {} \; | grep NAME | tail -n 1 | cut -d= -f2 | tr -d '"'`
   
     HOSTNAME=`hostname`
     KERNEL_INFO=`/bin/uname -r`
@@ -423,7 +423,6 @@ if [ $# -ge 1 ] ; then
     done
    
 else
-    #showAll
     showHelp;
     exit;
 fi
