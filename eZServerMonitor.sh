@@ -247,9 +247,9 @@ function memory()
 function network()
 {
     if [ -e /sbin/ifconfig ]; then 
-    INTERFACES=`/sbin/ifconfig |awk -F '[/  |: ]' '{print $1}' |sed -e '/^$/d'`
+        INTERFACES=`/sbin/ifconfig |awk -F '[/  |: ]' '{print $1}' |sed -e '/^$/d'`
     else
-    INTERFACES=`/sbin/ip a | sed '/^[0-9]\:/!d' | cut -d ":" -f 2 | cut -d " " -f 2`
+        INTERFACES=`/sbin/ip a | sed '/^[0-9]\:/!d' | cut -d ":" -f 2 | cut -d " " -f 2`
     fi
     
     if [ -e "/usr/bin/curl" ] ; then
@@ -263,7 +263,7 @@ function network()
  
     for INTERFACE in $INTERFACES
     do
-        IP_LAN=`/sbin/ip -f inet -o addr show ${INTERFACE} | cut -d\  -f 7 | cut -d/ -f 1`
+        IP_LAN=`/sbin/ip -f inet -o addr show ${INTERFACE} 2> /dev/null | cut -d\  -f 7 | cut -d/ -f 1`
         echo -e "${!THEME_TEXT}  IP LAN (${INTERFACE})\t ${WHITE}$IP_LAN"
     done
  
