@@ -251,12 +251,6 @@ function network()
     else
         INTERFACES=`/sbin/ip a | sed '/^[0-9]\:/!d' | cut -d ":" -f 2 | cut -d " " -f 2`
     fi
-    
-    if [ -e "/usr/bin/curl" ] ; then
-        IP_WAN=`curl -s ${GET_WAN_IP}`
-    else
-        IP_WAN=`wget ${GET_WAN_IP} -O - -o /dev/null`
-    fi
  
     echo
     makeTitle "Network"
@@ -266,6 +260,14 @@ function network()
         IP_LAN=`/sbin/ip -f inet -o addr show ${INTERFACE} 2> /dev/null | cut -d\  -f 7 | cut -d/ -f 1`
         echo -e "${!THEME_TEXT}  IP LAN (${INTERFACE})\t ${WHITE}$IP_LAN"
     done
+
+    if [ -e "/usr/bin/curl" ] ; then
+        IP_WAN=`curl -s ${GET_WAN_IP}`
+    elif [ -e "/usr/bin/wget" ] ; then
+        IP_WAN=`wget ${GET_WAN_IP} -O - -o /dev/null`
+    else
+        IP_WAN="Please, install curl or wget"
+    fi
  
     echo -e "${!THEME_TEXT}  IP WAN\t ${WHITE}$IP_WAN"
 }
