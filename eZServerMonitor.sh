@@ -243,7 +243,7 @@ function memory()
     echo
     makeTitle "Memory"
     echo -e "${!THEME_TEXT}  RAM\t\t${WHITE}${MEM_FREE}MB free of $MEM_TOTAL Mb"
-	echo -e "${!THEME_TEXT}  RAM\t\t${WHITE}${MEM_PERCENT}% used"
+    echo -e "${!THEME_TEXT}  RAM\t\t${WHITE}${MEM_PERCENT}% used"
 }
  
 # Function : network
