@@ -294,21 +294,19 @@ function ping()
     done
 }
  
-# Function : Disk space  (top 5)
+# Function : Disk space
 function disk_space()
 {
-    HDD_TOP=`df -h | head -1 | sed s/^/"  "/`
-    #HDD_DATA=`df -hl | grep -v "^Filesystem" | grep -v "^Sys. de fich." | sort -k5r | head -5 | sed s/^/"  "/`
-    # HDD_DATA=`df -hl | sed "1 d" | grep -v "^Filesystem" | grep -v "^Sys. de fich." | sort | head -5 | sed s/^/"  "/`
+    HDD_TOP=`df -hP | head -1 | sed s/^/"  "/`
  
     if [ ${DISK_SHOW_TMPFS} = true ] ; then
-        HDD_DATA=`df -hl | sed "1 d" | grep -iv "^Filesystem|Sys." | sort | head -5 | sed s/^/"  "/`
+        HDD_DATA=`df -hPl | sed "1 d" | grep -iv "^Filesystem|Sys." | sort | sed s/^/"  "/`
     else
-        HDD_DATA=`df -hl | sed "1 d" | grep -iv "^Filesystem|Sys." | grep -vE "^tmpfs|udev" | sort | head -5 | sed s/^/"  "/`
+        HDD_DATA=`df -hPl | sed "1 d" | grep -iv "^Filesystem|Sys." | grep -vE "^tmpfs|udev" | sort | sed s/^/"  "/`
     fi
  
     echo
-    makeTitle "Disk space (top 5)"
+    makeTitle "Disk space"
     echo -e "${!THEME_TEXT}$HDD_TOP"
     echo -e "${WHITE}$HDD_DATA"
 }
