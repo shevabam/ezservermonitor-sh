@@ -60,7 +60,7 @@ THEME_TITLE=WHITE_ON_GREY
  
 # Constants -- DON'T TOUCH !!
 ESM_NAME="eZ Server Monitor \`sh"
-ESM_VERSION="2.4"
+ESM_VERSION="2.4.1"
 ESM_AUTHOR="ShevAbam"
 ESM_CREATED="30 nov. 2017"
 ESM_URL="https://www.ezservermonitor.com"
@@ -119,12 +119,11 @@ function system()
     UPTIME_HOURS=$(( UPTIME / 60 / 60 % 24 ))
     UPTIME_DAYS=$(( UPTIME / 60 / 60 / 24 ))
  
-    LAST_BOOT_DATE=`who -b | awk '{print $3}'`
-    LAST_BOOT_TIME=`who -b | awk '{print $4}'`
+    LAST_BOOT_DATE=$(/bin/date -d "`cut -f1 -d. /proc/uptime` seconds ago")
  
     USERS_NB=`who | wc -l`
  
-    CURRENT_DATE=`/bin/date '+%F %T'`
+    CURRENT_DATE=`/bin/date`
  
     makeTitle "System"
  
@@ -132,7 +131,7 @@ function system()
     echo -e "${!THEME_TEXT}  OS\t\t   ${WHITE}$OS $DISTRO"
     echo -e "${!THEME_TEXT}  Kernel\t   ${WHITE}$KERNEL_INFO"
     echo -e "${!THEME_TEXT}  Uptime\t   ${WHITE}$UPTIME_DAYS day(s), $UPTIME_HOURS hours(s), $UPTIME_MINUTES minute(s)"
-    echo -e "${!THEME_TEXT}  Last boot\t   ${WHITE}$LAST_BOOT_DATE $LAST_BOOT_TIME"
+    echo -e "${!THEME_TEXT}  Last boot\t   ${WHITE}$LAST_BOOT_DATE"
     echo -e "${!THEME_TEXT}  Current user(s)  ${WHITE}$USERS_NB connected"
     echo -e "${!THEME_TEXT}  Server datetime  ${WHITE}$CURRENT_DATE"
 }
