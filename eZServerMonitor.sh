@@ -238,11 +238,16 @@ function memory()
     MEM_FREE=$(( $MEM_FREE + $MEM_BUFFERS + $MEM_CACHED ))
     MEM_FREE=$(( $MEM_FREE / 1024 ))
 
+    MEM_BUFFERS=$(( $MEM_BUFFERS / 1024 ))
+    MEM_CACHED=$(( $MEM_CACHED / 1024 ))
+
     MEM_PERCENT=$(echo $MEM_TOTAL $MEM_FREE | awk '{print $2/$1 * 100.0}')
  
     echo
     makeTitle "Memory"
-    echo -e "${!THEME_TEXT}  RAM\t\t${WHITE}${MEM_FREE}MB free of $MEM_TOTAL Mb"
+    echo -e "${!THEME_TEXT}  RAM\t\t${WHITE}${MEM_FREE}MB free of ${MEM_TOTAL}MB"
+    echo -e "${!THEME_TEXT}  RAM\t\t${WHITE}Buffers: ${MEM_BUFFERS}MB"
+    echo -e "${!THEME_TEXT}  RAM\t\t${WHITE}Cache: ${MEM_CACHED}MB"
     echo -e "${!THEME_TEXT}  RAM\t\t${WHITE}${MEM_PERCENT}% used"
 }
  
