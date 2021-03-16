@@ -1,5 +1,3 @@
-This is a fork of https://github.com/shevabam/ezservermonitor-sh. Original README below.
-
 [eZ Server Monitor](https://www.ezservermonitor.com) (eSM) is a script for monitoring Linux servers. It is available in [Bash](https://www.ezservermonitor.com/esm-sh/features) version and [Web](https://www.ezservermonitor.com/esm-web/features) application.
 
 # eZ Server Monitor `sh
@@ -22,6 +20,7 @@ Several themes are available !
 
 ![](https://www.ezservermonitor.com/uploads/esm_sh/esm-sh_themes.png)
 
-* Clone this repo or just grab the shell script file and run
+
+You can download the last version [here](https://www.ezservermonitor.com/esm-sh/downloads). The [documentation](https://www.ezservermonitor.com/esm-sh/documentation) describes the script as a whole and also the list of options available.
 
 **View more information on the [official website](https://www.ezservermonitor.com/esm-sh/features).**
