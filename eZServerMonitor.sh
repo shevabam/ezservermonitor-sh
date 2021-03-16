@@ -60,10 +60,11 @@ THEME_TITLE=WHITE_ON_GREY
  
 # Constants -- DON'T TOUCH !!
 ESM_NAME="eZ Server Monitor \`sh"
-ESM_VERSION="2.3"
+ESM_VERSION="2.4"
 ESM_AUTHOR="ShevAbam"
 ESM_CREATED="30 nov. 2017"
 ESM_URL="https://www.ezservermonitor.com"
+ESM_MODIFIER="yebo29"
  
 # Colors
 NC="\e[0m"
