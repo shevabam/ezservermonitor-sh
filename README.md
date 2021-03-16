@@ -2,6 +2,14 @@
 
 # eZ Server Monitor `sh
 
+Fork of https://github.com/shevabam/ezservermonitor-sh. Original README below. 
+
+## Install and Usage
+
+* Clone this repo or download the script. Make it executable and run the `-h` option to see available options. 
+
+## Original README 
+
 In its [Bash](https://www.ezservermonitor.com/esm-sh/features) version eSM is a simple script that displays on a terminal information such as:
 
 ![](https://www.ezservermonitor.com/uploads/esm_sh/esm-sh_dashboard-complete.png)
